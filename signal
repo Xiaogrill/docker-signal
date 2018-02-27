@@ -1,0 +1,35 @@
+#!/bin/bash
+
+WORKDIR="/root/docker/signal"
+
+if [ `id -u` != 0 ]; then
+#  if [ -t 0 ]; then
+    exec sudo `realpath $0` "$@"
+#  else
+#    exec sakura -e sudo `realpath $0` --no-interaction "$@"
+#  fi
+fi
+
+set -e
+
+if echo -- "$@" | grep -q " --build"; then
+  cd $WORKDIR
+  docker pull debian
+  docker build --pull=true -t signal .
+fi
+
+if echo -- "$@" | grep -q " --no-interaction"; then
+  setsid `realpath $0` "$(echo " " "$@" | sed 's/--no-interaction//')" >/dev/null </dev/null 2>/dev/null &
+  sleep 1.5
+  exit 0
+fi
+
+TMP_XAUTH=`mktemp /tmp/.docker-signal-XXXX`
+xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $TMP_XAUTH nmerge -
+chown -R $SUDO_UID:$SUDO_GID $TMP_XAUTH
+docker run --cap-drop=all --rm --shm-size 2g -e DISPLAY=$DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+    -v $TMP_XAUTH:/home/user/.Xauthority:ro \
+    -v /home/$SUDO_USER/.config/Signal:/home/user/.config/Signal \
+    signal
+rm -rf $TMP_XAUTH
