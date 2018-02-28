@@ -6,11 +6,9 @@ I just want to run it on non-debian systems :(
 
 ## Installation
 
-Read `deploy.sh`, `extract.sh` and `signal` and maybe change `INSTALL_PREFIX` and `WORKDIR`.
+Read `deploy.sh` and `signal` and maybe change `INSTALL_PREFIX` and `WORKDIR` respectively.
 
 Run `./deploy.sh`.
-
-Also; first time you run `signal`: Use `extract.sh` to get your /home/$SUDO_USER/.config/Signal directory.
 
 ## Usage
 
