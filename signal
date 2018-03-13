@@ -33,5 +33,6 @@ docker run --cap-drop=all --rm --shm-size 2g -e DISPLAY=$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
     -v $TMP_XAUTH:/home/user/.Xauthority:ro \
     -v /home/$SUDO_USER/.config/Signal:/home/user/.config/Signal \
+    --net=host \
     signal
 rm -rf $TMP_XAUTH
