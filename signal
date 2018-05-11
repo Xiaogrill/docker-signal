@@ -30,6 +30,7 @@ chown -R $SUDO_UID:$SUDO_GID $TMP_XAUTH
 mkdir -p /home/$SUDO_USER/.config/Signal || true
 chown -R $SUDO_UID:$SUDO_GID /home/$SUDO_USER/.config/Signal
 docker run --cap-drop=all --rm --shm-size 2g -e DISPLAY=$DISPLAY \
+    --name=signal \
     -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
     -v $TMP_XAUTH:/home/user/.Xauthority:ro \
     -v /home/$SUDO_USER/.config/Signal:/home/user/.config/Signal \
