@@ -34,5 +34,7 @@ docker run --cap-drop=all --rm --shm-size 2g -e DISPLAY=$DISPLAY \
     -v $TMP_XAUTH:/home/user/.Xauthority:ro \
     -v /home/$SUDO_USER/.config/Signal:/home/user/.config/Signal \
     --net=host \
+    --device=/dev/snd \
+    --group-add $(getent group audio | cut -d: -f3) \
     signal
 rm -rf $TMP_XAUTH

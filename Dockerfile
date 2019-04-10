@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y signal-desktop && \
 # Setting up user environment
 RUN find / -type f -perm /6000 -exec chmod -s {} + 2>/dev/null || true && \
     groupadd -g 1000 user && useradd -g user -m -u 1000 user
+RUN usermod -a -G audio user
 USER user
 ENV HOME /home/user
 
