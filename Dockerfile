@@ -1,6 +1,6 @@
 FROM debian
 
-RUN apt-get update && apt-get install -y curl gnupg apt-transport-https
+RUN apt-get update && apt-get install -y curl gnupg apt-transport-https libx11-xcb-dev libx11-xcb1
 
 RUN curl -s https://updates.signal.org/desktop/apt/keys.asc | apt-key add - && \
     echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" > /etc/apt/sources.list.d/signal-xenial.list
